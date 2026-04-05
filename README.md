@@ -176,7 +176,7 @@ MONGODB_URI=your_mongodb_uri
 
 **Course:** B.Tech CSE (2023-2027)
 
-**Subject:** Final Year Project
+**Subject:** Full stack project
 
 ---
 
