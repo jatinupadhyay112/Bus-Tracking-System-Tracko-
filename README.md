@@ -17,7 +17,7 @@ Tracko is a **React Native** mobile application built for schools and colleges t
 |--------|------|-----------|
 | Jatin | API Integration & Database | Firebase, MongoDB, OSRM |
 | Diya | Frontend Development | React Native, Expo |
-| Preeti | Backend Development | Node.js, express-server framework |
+| Preeti | Backend Development | Node.js,socket.IO,express-backend framework |
 | Hummer | Database & Schema | MongoDB, Firebase Realtime DB |
 
 ---
