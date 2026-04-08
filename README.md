@@ -17,7 +17,7 @@ Tracko is a **React Native** mobile application built for schools and colleges t
 |--------|------|-----------|
 | Jatin | API Integration & Database | Firebase, MongoDB, OSRM |
 | Diya | Frontend Development | React Native, Expo |
-| Preeti | Backend Development | Python, FastAPI |
+| Preeti | Backend Development | Node.js, express-server framework |
 | Hummer | Database & Schema | MongoDB, Firebase Realtime DB |
 
 ---
@@ -30,7 +30,7 @@ Tracko is a **React Native** mobile application built for schools and colleges t
 | UI Library | React Native Paper |
 | Navigation | React Navigation |
 | Maps | OpenStreetMap + Leaflet |
-| Backend | Python + FastAPI |
+| Backend | Nde.js, Express- server framework |
 | Real-time Sync | Firebase Realtime Database |
 | Authentication | Firebase Auth |
 | Push Notifications | Firebase Cloud Messaging (FCM) |
@@ -74,15 +74,12 @@ Tracko/
 │   └── firebase.js
 │
 ├── backend/              # Python FastAPI (Preeti)
-│   ├── main.py
-│   ├── routes/
-│   │   ├── auth.py
-│   │   ├── driver.py
-│   │   ├── parent.py
-│   │   └── admin.py
-│   ├── models/
-│   └── requirements.txt
-│
+│   ├── node_modules/
+├── package.json
+├── server.js
+├── models/
+│   └── Bus.js
+├── .env
 ├── database/             # MongoDB Schema (Hummer + Jatin)
 │   ├── schemas/
 │   │   ├── user.js
@@ -121,7 +118,7 @@ Tracko/
 
 ### Prerequisites
 - Node.js
-- Python 3.9+
+- Express- server framework, socket.IO
 - Expo Go (on your phone)
 - MongoDB Atlas account
 - Firebase account
@@ -136,8 +133,11 @@ npx expo start
 ### Backend Setup
 ```bash
 cd backend
-pip install -r requirements.txt
-uvicorn main:app --reload
+install Node.js
+npm init -y
+package.json
+project structure
+server.js
 ```
 
 ---
