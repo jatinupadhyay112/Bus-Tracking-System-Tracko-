@@ -172,12 +172,10 @@ MONGODB_URI=your_mongodb_uri
 
 ## 🏫 Project Info
 
-**Institute:** KCC Institute of Technology and Management, Greater Noida
-
 **Course:** B.Tech CSE (2023-2027)
 
 **Subject:** Full stack project
 
 ---
 
-> Built with ❤️ by Team Tracko
+> Built with ❤️ by Team POINT BLANK
