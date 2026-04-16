@@ -73,7 +73,7 @@ Tracko/
 │   ├── navigation/
 │   └── firebase.js
 │
-├── backend/               FastAPI (Preeti)
+├── backend/               #socket.io real-time GPS(Preeti)
 │   ├── node_modules/
 ├── package.json
 ├── server.js
