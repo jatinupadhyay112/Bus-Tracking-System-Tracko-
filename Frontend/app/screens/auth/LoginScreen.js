@@ -1,14 +1,68 @@
 import { DMSans_400Regular, DMSans_700Bold, useFonts } from "@expo-google-fonts/dm-sans";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import {
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ScrollView,
+} from "react-native";
 
 const roles = [
-  { label: "Bus Controller", icon: "bus-outline", route: "/driver" },
-  { label: "User", icon: "person-outline", route: "/parent" },
-  { label: "Admin", icon: "shield-outline", route: "/admin" },
+  {
+    key: "admin",
+    label: "Admin",
+    icon: "security",
+    route: "/admin",
+    description:
+      "Fleet Manager: Oversee all routes, vehicles, and operational safety metrics.",
+  },
+  {
+    key: "user",
+    label: "User",
+    icon: "person",
+    route: "/parent",
+    description:
+      "Parent/Student: Track your specific bus and receive live arrival alerts.",
+  },
+  {
+    key: "bus-controller",
+    label: "Bus Controller",
+    icon: "directions-bus",
+    route: "/driver",
+    description:
+      "Driver: Manage trip starts, handle stops, and broadcast live position.",
+  },
 ];
+
+function RoleCard({ role, selected, onPress }) {
+  return (
+    <TouchableOpacity
+      activeOpacity={0.85}
+      onPress={onPress}
+      style={[styles.card, selected && styles.cardSelected]}
+    >
+      <View style={styles.cardLeft}>
+        <View style={styles.iconCircle}>
+          <MaterialIcons
+            name={role.icon}
+            size={22}
+            color={selected ? "#F8F9FF" : "#C7C7D9"}
+          />
+        </View>
+        <View style={styles.cardText}>
+          <Text style={styles.cardTitle}>{role.label}</Text>
+          <Text style={styles.cardDescription}>{role.description}</Text>
+        </View>
+      </View>
+      {selected ? <Ionicons name="checkmark-circle" size={24} color="#7C83FD" /> : null}
+    </TouchableOpacity>
+  );
+}
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -19,65 +73,43 @@ export default function LoginScreen() {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#000000" />
+      <StatusBar barStyle="light-content" backgroundColor="#0B0B0F" />
 
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.title}>TRACKO</Text>
-        <View style={styles.indigoLine} />
-      </View>
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <View style={styles.header}>
+          <Text style={styles.title}>TRACKO</Text>
+          <Text style={styles.subtitle}>Real-time campus transit tracking</Text>
+        </View>
 
-      {/* Switcher */}
-      <View style={styles.middle}>
-        <Text style={styles.youAre}>— You Are —</Text>
-
-        <View style={styles.switcher}>
+        <View style={styles.cardsWrapper}>
           {roles.map((role, index) => (
-            <TouchableOpacity
-              key={index}
-              style={[styles.switchBtn, selected === index && styles.switchBtnActive]}
+            <RoleCard
+              key={role.key}
+              role={role}
+              selected={selected === index}
               onPress={() => setSelected(index)}
-              activeOpacity={0.8}
-            >
-              <Ionicons
-                name={role.icon}
-                size={16}
-                color={selected === index ? "#ffffff" : "#6b7280"}
-              />
-              <Text style={[styles.switchText, selected === index && styles.switchTextActive]}>
-                {role.label}
-              </Text>
-            </TouchableOpacity>
+            />
           ))}
         </View>
 
-        {/* Selected Role Card */}
-        <View style={styles.roleCard}>
-          <View style={styles.roleIconBox}>
-            <Ionicons name={roles[selected].icon} size={36} color="#6366f1" />
-          </View>
-          <Text style={styles.roleLabel}>{roles[selected].label}</Text>
-          <Text style={styles.roleDesc}>
-            {selected === 0 && "Manage your route & share live location"}
-            {selected === 1 && "Track your respective bus in real-time"}
-            {selected === 2 && "Monitor all buses & manage routes"}
-          </Text>
-        </View>
-
-        {/* Continue Button */}
         <TouchableOpacity
-          style={styles.continueBtn}
-          onPress={() => router.push(roles[selected].route)}
           activeOpacity={0.85}
+          onPress={() => router.push(roles[selected].route)}
+          style={styles.buttonWrapper}
         >
-          <Text style={styles.continueBtnText}>Continue</Text>
-          <Ionicons name="arrow-forward" size={18} color="#ffffff" />
+          <LinearGradient
+            colors={["#7C83FD", "#5B5EF7"]}
+            start={[0, 0]}
+            end={[1, 1]}
+            style={styles.buttonGradient}
+          >
+            <Text style={styles.buttonText}>Continue →</Text>
+          </LinearGradient>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
 
-      {/* Footer */}
       <View style={styles.footer}>
-        <Text style={styles.footerText}>TEAM POINT BLANK</Text>
+        <Text style={styles.footerText}>SECURE CAMPUS PORTAL</Text>
       </View>
     </View>
   );
@@ -86,127 +118,111 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000000",
+    backgroundColor: "#0B0B0F",
+  },
+  content: {
     paddingHorizontal: 24,
-    paddingVertical: 60,
-    justifyContent: "space-between",
+    paddingTop: 48,
+    paddingBottom: 24,
   },
   header: {
     alignItems: "center",
-    marginTop: 20,
+    marginBottom: 32,
   },
   title: {
-    fontSize: 62,
-    fontWeight: "900",
-    color: "#ffffff",
-    letterSpacing: 14,
+    fontSize: 48,
+    color: "#FFFFFF",
     fontFamily: "DMSans_700Bold",
+    letterSpacing: 8,
+    textAlign: "center",
+    marginBottom: 10,
   },
-  indigoLine: {
-    width: 50,
-    height: 3,
-    backgroundColor: "#6366f1",
-    marginTop: 14,
-    borderRadius: 2,
-  },
-  middle: {
-    alignItems: "center",
-    gap: 24,
-  },
-  youAre: {
-    color: "#6366f1",
-    fontSize: 12,
-    letterSpacing: 4,
-    fontFamily: "DMSans_400Regular",
-  },
-  switcher: {
-    flexDirection: "row",
-    backgroundColor: "#111111",
-    borderRadius: 14,
-    padding: 4,
-    borderWidth: 1,
-    borderColor: "#222222",
-    width: "100%",
-  },
-  switchBtn: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 10,
-    borderRadius: 10,
-    gap: 6,
-  },
-  switchBtnActive: {
-    backgroundColor: "#6366f1",
-  },
-  switchText: {
-    fontSize: 11,
-    color: "#6b7280",
-    fontFamily: "DMSans_400Regular",
-  },
-  switchTextActive: {
-    color: "#ffffff",
-    fontWeight: "700",
-    fontFamily: "DMSans_700Bold",
-  },
-  roleCard: {
-    width: "100%",
-    backgroundColor: "#111111",
-    borderRadius: 20,
-    padding: 30,
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#222222",
-    gap: 10,
-  },
-  roleIconBox: {
-    width: 72,
-    height: 72,
-    borderRadius: 20,
-    backgroundColor: "#0a0a1a",
-    justifyContent: "center",
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#6366f1",
-    marginBottom: 4,
-  },
-  roleLabel: {
-    fontSize: 22,
-    fontWeight: "900",
-    color: "#ffffff",
-    fontFamily: "DMSans_700Bold",
-    letterSpacing: 1,
-  },
-  roleDesc: {
-    fontSize: 12,
-    color: "#6b7280",
+  subtitle: {
+    fontSize: 15,
+    color: "#A5A5C4",
     fontFamily: "DMSans_400Regular",
     textAlign: "center",
+    lineHeight: 22,
+    maxWidth: 320,
   },
-  continueBtn: {
-    width: "100%",
-    backgroundColor: "#6366f1",
-    borderRadius: 14,
-    paddingVertical: 16,
+  cardsWrapper: {
+    gap: 16,
+  },
+  card: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    gap: 8,
+    justifyContent: "space-between",
+    backgroundColor: "#14141C",
+    borderRadius: 26,
+    padding: 20,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.04)",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.18,
+    shadowRadius: 24,
+    elevation: 6,
   },
-  continueBtnText: {
-    color: "#ffffff",
+  cardSelected: {
+    borderColor: "#7C83FD",
+    backgroundColor: "#181826",
+  },
+  cardLeft: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 16,
+    flex: 1,
+  },
+  iconCircle: {
+    width: 52,
+    height: 52,
+    borderRadius: 18,
+    backgroundColor: "#11111A",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cardText: {
+    flex: 1,
+  },
+  cardTitle: {
     fontSize: 16,
-    fontWeight: "700",
+    color: "#FFFFFF",
+    fontFamily: "DMSans_700Bold",
+    marginBottom: 6,
+  },
+  cardDescription: {
+    fontSize: 13,
+    color: "#B2B0CE",
+    fontFamily: "DMSans_400Regular",
+    lineHeight: 19,
+  },
+  buttonWrapper: {
+    marginTop: 28,
+  },
+  buttonGradient: {
+    borderRadius: 28,
+    paddingVertical: 18,
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#7C83FD",
+    shadowOffset: { width: 0, height: 18 },
+    shadowOpacity: 0.18,
+    shadowRadius: 30,
+    elevation: 10,
+  },
+  buttonText: {
+    color: "#FFFFFF",
+    fontSize: 16,
     fontFamily: "DMSans_700Bold",
     letterSpacing: 1,
   },
   footer: {
+    paddingVertical: 18,
     alignItems: "center",
   },
   footerText: {
-    color: "#374151",
-    fontSize: 10,
+    fontSize: 11,
+    color: "#8B8CB4",
     letterSpacing: 2,
     fontFamily: "DMSans_400Regular",
   },
