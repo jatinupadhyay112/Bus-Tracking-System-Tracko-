@@ -1,3 +1,8 @@
+import app from "../../firebaseConfig";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
+const auth = getAuth(app);
+
 import { DMSans_400Regular, DMSans_700Bold, useFonts } from "@expo-google-fonts/dm-sans";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
@@ -67,10 +72,19 @@ export default function SignupScreen() {
 
     setLoading(true);
     try {
-      // TODO: Replace with your actual signup API call
-      console.log("Signup attempt:", formData);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+
+      console.log("Signup success:", userCredential.user);
       Alert.alert("Success", "Account created successfully!");
       // router.push("/login");
+
+      // optional redirect
+      router.push("/screens/auth");
+
     } catch (error) {
       Alert.alert("Error", "Signup failed. Please try again.");
     } finally {

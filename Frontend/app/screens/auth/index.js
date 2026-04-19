@@ -1,3 +1,8 @@
+import app from "../../firebaseConfig";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
+const auth = getAuth(app);
+
 import { DMSans_400Regular, DMSans_700Bold, useFonts } from "@expo-google-fonts/dm-sans";
 import { Ionicons, MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { useRouter, useLocalSearchParams } from "expo-router";
@@ -70,8 +75,12 @@ export default function LoginScreen() {
 
     setLoading(true);
     try {
-      // TODO: Replace with actual login API call
-      console.log("Login attempt:", { email, password });
+      const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+      console.log("Login success:", userCredential.user);
       Alert.alert("Success", "Logged in successfully!");
       // Redirect based on role (you may need to update this)
       // router.push("/admin");
