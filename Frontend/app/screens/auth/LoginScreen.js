@@ -171,7 +171,6 @@ export default function LoginScreen() {
         </View>
       </ScrollView>
 
-      {/* Footer */}
       <View style={styles.footer}>
         <Text style={styles.footerText}>
           Don&apos;t have an account?{" "}
@@ -182,6 +181,7 @@ export default function LoginScreen() {
             Sign up
           </Text>
         </Text>
+      </View>
       </View>
     </View>
   );
@@ -352,6 +352,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: "#B2B0CE",
     fontFamily: "DMSans_400Regular",
+    textAlign: "center",
   },
   signupLink: {
     color: "#7C83FD",
