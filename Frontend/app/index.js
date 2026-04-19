@@ -1,3 +1,3 @@
-import LoginScreen from "./screens/auth/LoginScreen";
+import RoleSelection from "./screens/auth/role-selection";
 
-export default LoginScreen;
+export default RoleSelection;

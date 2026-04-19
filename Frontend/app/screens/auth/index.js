@@ -1,6 +1,6 @@
 import { DMSans_400Regular, DMSans_700Bold, useFonts } from "@expo-google-fonts/dm-sans";
 import { Ionicons, MaterialIcons, FontAwesome } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import {
@@ -45,6 +45,7 @@ function InputField({ label, placeholder, icon, isPassword, value, onChangeText,
 
 export default function LoginScreen() {
   const router = useRouter();
+  const { role } = useLocalSearchParams();
   const [fontsLoaded] = useFonts({ DMSans_400Regular, DMSans_700Bold });
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -97,7 +98,9 @@ export default function LoginScreen() {
         {/* Title Section */}
         <View style={styles.titleSection}>
           <Text style={styles.mainTitle}>Welcome back</Text>
-          <Text style={styles.subtitle}>Log in to track your fleet in real-time.</Text>
+          <Text style={styles.subtitle}>
+            {role ? `Continue as ${role.replace(/-/g, " ")}` : "Log in to track your fleet in real-time."}
+          </Text>
         </View>
 
         {/* Form */}
@@ -181,7 +184,6 @@ export default function LoginScreen() {
             Sign up
           </Text>
         </Text>
-      </View>
       </View>
     </View>
   );
