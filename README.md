@@ -27,10 +27,11 @@ Tracko is a **React Native** mobile application built for schools and colleges t
 | Layer | Technology |
 |-------|-----------|
 | Mobile App | React Native + Expo |
+| Language | TypeScript |
 | UI Library | React Native Paper |
 | Navigation | React Navigation |
 | Maps | OpenStreetMap + Leaflet |
-| Backend | Nde.js, Express- server framework |
+| Backend | Node.js + Express |
 | Real-time Sync | Firebase Realtime Database |
 | Authentication | Firebase Auth |
 | Push Notifications | Firebase Cloud Messaging (FCM) |
@@ -73,7 +74,7 @@ Tracko/
 │   ├── navigation/
 │   └── firebase.js
 │
-├── backend/               FastAPI (Preeti)
+├── backend/               #socket.io real-time GPS(Preeti)
 │   ├── node_modules/
 ├── package.json
 ├── server.js
