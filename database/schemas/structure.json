@@ -1,0 +1,29 @@
+{
+  "buses": {
+    "busId_example": {
+      "driverId": "uid_here",
+      "isActive": true,
+      "currentLocation": {
+        "lat": 28.6139,
+        "lng": 77.2090,
+        "updatedAt": "2026-04-07T10:00:00Z"
+      }
+    }
+  },
+  "sessions": {
+    "sessionId_example": {
+      "busId": "busId_here",
+      "driverId": "uid_here",
+      "routeId": "routeId_here",
+      "isActive": true,
+      "startTime": "2026-04-07T08:00:00Z"
+    }
+  },
+  "notifications": {
+    "userId_example": {
+      "message": "Bus 8 min mein aayegi",
+      "timestamp": "2026-04-07T09:52:00Z",
+      "read": false
+    }
+  }
+}
