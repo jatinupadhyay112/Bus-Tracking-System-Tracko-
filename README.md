@@ -175,7 +175,7 @@ MONGODB_URI=your_mongodb_uri
 
 **Course:** B.Tech CSE (2023-2027)
 
-**Subject:** Full stack project
+**Subject:** Mern based project
 
 ---
 
