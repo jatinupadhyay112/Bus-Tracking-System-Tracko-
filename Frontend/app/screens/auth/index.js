@@ -1,8 +1,5 @@
 import app from "../../firebaseConfig";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-
-const auth = getAuth(app);
-
 import { DMSans_400Regular, DMSans_700Bold, useFonts } from "@expo-google-fonts/dm-sans";
 import { Ionicons, MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { useRouter, useLocalSearchParams } from "expo-router";
@@ -18,6 +15,8 @@ import {
   TextInput,
   Alert,
 } from "react-native";
+
+const auth = getAuth(app);
 
 function InputField({ label, placeholder, icon, isPassword, value, onChangeText, showPassword, onTogglePassword }) {
   return (
@@ -82,8 +81,15 @@ export default function LoginScreen() {
     );
       console.log("Login success:", userCredential.user);
       Alert.alert("Success", "Logged in successfully!");
-      // Redirect based on role (you may need to update this)
-      // router.push("/admin");
+
+      // Redirect based on role
+      const roleRoutes = {
+        admin: "/admin",
+        user: "/parent",
+        "bus-controller": "/driver"
+      };
+      const route = roleRoutes[role] || "/screens/auth/role-selection";
+      router.push(route);
     } catch (_error) {
       Alert.alert("Error", "Login failed. Please try again.");
     } finally {

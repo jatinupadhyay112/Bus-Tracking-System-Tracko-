@@ -1,3 +1,3 @@
-import RoleSelection from "./screens/auth/role-selection";
+import GetStarted from "./screens/auth/get-started";
 
-export default RoleSelection;
+export default GetStarted;
