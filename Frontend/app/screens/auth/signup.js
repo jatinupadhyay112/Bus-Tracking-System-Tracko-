@@ -1,4 +1,4 @@
-import app from "../../firebaseConfig";
+import { app } from "../../firebaseConfig";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { DMSans_400Regular, DMSans_700Bold, useFonts } from "@expo-google-fonts/dm-sans";
 import { Ionicons } from "@expo/vector-icons";

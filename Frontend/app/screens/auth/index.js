@@ -1,9 +1,11 @@
-import app from "../../firebaseConfig";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { app, googleClientIds } from "../../firebaseConfig";
+import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithCredential } from "firebase/auth";
 import { DMSans_400Regular, DMSans_700Bold, useFonts } from "@expo-google-fonts/dm-sans";
 import { Ionicons, MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { useRouter, useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import * as WebBrowser from "expo-web-browser";
+import * as Google from "expo-auth-session/providers/google";
 import { LinearGradient } from "expo-linear-gradient";
 import {
   StatusBar,
@@ -16,7 +18,16 @@ import {
   Alert,
 } from "react-native";
 
+WebBrowser.maybeCompleteAuthSession();
 const auth = getAuth(app);
+
+// Prepare Google AuthRequest using client IDs from firebaseConfig
+const googleConfig = {
+  expoClientId: googleClientIds.expoClientId,
+  iosClientId: googleClientIds.iosClientId,
+  androidClientId: googleClientIds.androidClientId,
+  webClientId: googleClientIds.webClientId,
+};
 
 function InputField({ label, placeholder, icon, isPassword, value, onChangeText, showPassword, onTogglePassword }) {
   return (
@@ -55,6 +66,7 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [request, response, promptAsync] = Google.useIdTokenAuthRequest(googleConfig);
 
   if (!fontsLoaded) return null;
 
@@ -96,6 +108,35 @@ export default function LoginScreen() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (response?.type === "success") {
+      const idToken = response.params?.id_token;
+      if (!idToken) {
+        Alert.alert("Error", "Google authentication failed: no id token returned.");
+        return;
+      }
+      setLoading(true);
+      const credential = GoogleAuthProvider.credential(idToken);
+      signInWithCredential(auth, credential)
+        .then((userCredential) => {
+          console.log("Google sign-in success:", userCredential.user);
+          Alert.alert("Success", "Logged in with Google");
+          const roleRoutes = {
+            admin: "/admin",
+            user: "/parent",
+            "bus-controller": "/driver",
+          };
+          const route = roleRoutes[role] || "/screens/auth/role-selection";
+          router.push(route);
+        })
+        .catch((err) => {
+          console.error("Google sign-in error:", err);
+          Alert.alert("Error", "Google sign-in failed. Please try again.");
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [response]);
 
   return (
     <View style={styles.container}>

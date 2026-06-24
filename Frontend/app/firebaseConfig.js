@@ -11,3 +11,12 @@ const firebaseConfig = {
 };
 
 export const app = initializeApp(firebaseConfig);
+
+// Add your Google OAuth client IDs here (create them in Firebase Console -> OAuth providers).
+// Replace the placeholder strings with your actual client IDs for Expo, iOS, Android and Web.
+export const googleClientIds = {
+  expoClientId: "YOUR_EXPO_CLIENT_ID.apps.googleusercontent.com",
+  iosClientId: "YOUR_IOS_CLIENT_ID.apps.googleusercontent.com",
+  androidClientId: "YOUR_ANDROID_CLIENT_ID.apps.googleusercontent.com",
+  webClientId: "YOUR_WEB_CLIENT_ID.apps.googleusercontent.com",
+};
